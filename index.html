@@ -36,7 +36,7 @@
         }
     </style>
     <script>
-        const socket = new WebSocket('ws://192.168.137.143:81');
+        const socket = new WebSocket('ws://192.168.137.72:81');
 
         socket.onmessage = function(event) {
             const data = JSON.parse(event.data); // ESP32 sends JSON formatted data
