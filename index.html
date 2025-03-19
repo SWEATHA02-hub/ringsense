@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESP32 Health Monitor</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            color: #333;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            display: inline-block;
+            margin-top: 20px;
+        }
+        h1 {
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .vital-box {
+            width: 80%;
+            margin: 10px auto;
+            padding: 15px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            font-size: 20px;
+            font-weight: bold;
+        }
+    </style>
+    <script>
+        const socket = new WebSocket('ws://192.168.137.211:81'); // Connects to your ESP32
+
+        socket.onmessage = function(event) {
+            const data = JSON.parse(event.data); // ESP32 sends JSON formatted data
+            
+            document.getElementById("bp").innerText = `Blood Pressure: ${data.bp} mmHg`;
+            document.getElementById("steps").innerText = `Steps Taken: ${data.steps}`;
+            document.getElementById("calories").innerText = `Calories Burned: ${data.calories} kcal`;
+            document.getElementById("sleep").innerText = `Sleep Duration: ${data.sleep} hrs`;
+        };
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>ESP32 Health Monitor</h1>
+        <div class="vital-box" id="bp">Blood Pressure: Loading...</div>
+        <div class="vital-box" id="steps">Steps Taken: Loading...</div>
+        <div class="vital-box" id="calories">Calories Burned: Loading...</div>
+        <div class="vital-box" id="sleep">Sleep Duration: Loading...</div>
+    </div>
+</body>
+</html>
